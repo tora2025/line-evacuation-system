@@ -1,0 +1,14 @@
+type: web
+name: line-evacuation-system
+env: python
+buildCommand: "pip install -r requirements.txt"
+startCommand: "python app.py"
+envVars:
+  - key: DB_HOST
+    value: your-db-host
+  - key: DB_NAME
+    value: your-db-name
+  - key: DB_USER
+    value: your-db-user
+  - key: DB_PASSWORD
+    value: your-db-password

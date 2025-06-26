@@ -1,5 +1,3 @@
-# app.py
-
 from flask import Flask, request, jsonify, render_template
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -36,6 +34,7 @@ def webhook():
     except InvalidSignatureError:
         return 'Invalid signature', 400
     return 'OK', 200
+
 # 位置情報メッセージ受信 → DB保存 + QuickReply
 @handler.add(MessageEvent, message=LocationMessage)
 def handle_location(event):
@@ -103,5 +102,7 @@ def get_data():
 
     return jsonify({"type": "FeatureCollection", "features": features})
 
+# Flaskの起動（Render対応）
 if __name__ == "__main__":
-    app.run(debug=Tru
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port, debug=True)

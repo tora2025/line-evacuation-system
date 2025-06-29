@@ -17,10 +17,10 @@ handler = WebhookHandler(CHANNEL_SECRET)
 # PostgreSQL接続関数
 def connect_db():
     return psycopg2.connect(
-        host=os.environ.get("DB_HOST", "your-db-host"),
-        dbname=os.environ.get("DB_NAME", "your-db-name"),
-        user=os.environ.get("DB_USER", "your-db-user"),
-        password=os.environ.get("DB_PASSWORD", "your-db-password"),
+        host=os.environ.get("aws-0-ap-northeast-1.pooler.supabase.com"),
+        dbname=os.environ.get("postgres"),
+        user=os.environ.get("postgres.igalbyihaubxbfhyvuwe"),
+        password=os.environ.get("tora0614nazarick"),
         port=5432
     )
 

@@ -71,8 +71,11 @@ def handle_text(event):
             cur.execute("""
                 UPDATE damage_reports 
                 SET damage_info = %s
-                WHERE user_id = %s AND damage_info IS NULL
-                ORDER BY id DESC LIMIT 1
+               WHERE id = (
+        SELECT id FROM damage_reports 
+        WHERE user_id = %s AND damage_info IS NULL
+        ORDER BY id DESC LIMIT 1
+        )
             """, (damage, user_id))
             conn.commit()
 

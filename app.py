@@ -52,13 +52,18 @@ def handle_location(event):
 
     items = ['倒壊', '冠水', '通行止め', '火災', 'その他']
     quick_reply_items = [QuickReplyButton(action=MessageAction(label=item, text=item)) for item in items]
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(
-            text='被害状況を選択してください：',
-            quick_reply=QuickReply(items=quick_reply_items)
-        )
+   line_bot_api.reply_message(
+    event.reply_token,
+    TextSendMessage(
+        text='健康状態を選んでください：',
+        quick_reply=QuickReply(items=[
+            QuickReplyButton(action=MessageAction(label="無傷", text="無傷")),
+            QuickReplyButton(action=MessageAction(label="軽傷", text="軽傷")),
+            QuickReplyButton(action=MessageAction(label="重傷", text="重傷")),
+        ])
     )
+)
+
 
 # テキストメッセージ受信 → 被害内容DBに登録
 @handler.add(MessageEvent, message=TextMessage)
@@ -109,3 +114,4 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+

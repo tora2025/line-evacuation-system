@@ -49,10 +49,10 @@ def handle_location(event):
                 (user_id, lat, lng)
             )
             conn.commit()
-
+    # 被害状況を選択するQuickReply
     items = ['倒壊', '冠水', '通行止め', '火災', 'その他']
     quick_reply_items = [QuickReplyButton(action=MessageAction(label=item, text=item)) for item in items]
-   line_bot_api.reply_message(
+    line_bot_api.reply_message(
     event.reply_token,
     TextSendMessage(
         text='健康状態を選んでください：',
@@ -132,5 +132,6 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 
 

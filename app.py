@@ -94,24 +94,43 @@ def handle_text(event):
 def map_view():
     return render_template("index.html")
 
-# 被害情報をGeoJSONで返すAPI
+# 被害情報をGeoJSONで返すAPI（追加情報を含む）
 @app.route("/data")
 def get_data():
     with connect_db() as conn:
         with conn.cursor() as cur:
-            cur.execute("SELECT latitude, longitude, damage_info FROM damage_reports WHERE damage_info IS NOT NULL")
+            cur.execute("""
+                SELECT latitude, longitude, damage_info, health_status, rescue_needed,
+                       people_count, age_group, comment
+                FROM damage_reports
+                WHERE damage_info IS NOT NULL
+            """)
             rows = cur.fetchall()
 
-    features = [{
-        "type": "Feature",
-        "geometry": {"type": "Point", "coordinates": [lng, lat]},
-        "properties": {"damage": damage}
-    } for lat, lng, damage in rows]
+    features = []
+    for lat, lng, damage, health_status, rescue_needed, people_count, age_group, comment in rows:
+        properties = {
+            "damage": damage,
+            "health_status": health_status,
+            # psycopg2 は boolean を Python の True/False で返します（そのまま JSON に出力可）
+            "rescue_needed": rescue_needed,
+            "people_count": people_count,
+            "age_group": age_group,
+            "comment": comment
+        }
+        feature = {
+            "type": "Feature",
+            "geometry": {"type": "Point", "coordinates": [lng, lat]},
+            "properties": properties
+        }
+        features.append(feature)
 
     return jsonify({"type": "FeatureCollection", "features": features})
+
 
 # Flaskの起動（Render対応）
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 

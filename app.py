@@ -199,6 +199,7 @@ def map_view():
 @app.route("/clear_data", methods=["POST"])
 def clear_data():
     try:
+        global supabase
         supabase.table("disaster_reports").delete().neq("id", 0).execute()
         return jsonify({"status": "success", "message": "全データを削除しました"})
     except Exception as e:
@@ -241,4 +242,5 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 

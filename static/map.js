@@ -13,7 +13,7 @@ function getMarkerIcon(report) {
   }
 
   // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "▲";
+  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "▲" : "●";
 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
@@ -98,4 +98,5 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
+
 

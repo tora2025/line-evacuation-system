@@ -7,13 +7,13 @@ function getMarkerIcon(report) {
   // === 健康状態 → 色 ===
   let color = "gray";
   switch (report.health_status) {
-    case "重症": color = "red"; break;
+    case "重傷": color = "red"; break;
     case "軽傷": color = "orange"; break;
     case "無傷": color = "green"; break;
   }
 
   // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "◆" : "●";
+  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "▲";
 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
@@ -98,3 +98,4 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
+

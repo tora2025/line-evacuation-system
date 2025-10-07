@@ -196,6 +196,15 @@ def handle_text(event):
 def map_view():
     return render_template("index.html")
 
+@app.route("/clear_data", methods=["POST"])
+def clear_data():
+    try:
+        supabase.table("disaster_reports").delete().neq("id", 0).execute()
+        return jsonify({"status": "success", "message": "全データを削除しました"})
+    except Exception as e:
+        return jsonify({"status": "error", "message": str(e)})
+
+
 # 被害情報をGeoJSONで返すAPI（追加情報を含む）
 @app.route("/data")
 def get_data():
@@ -232,3 +241,4 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+

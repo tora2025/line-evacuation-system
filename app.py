@@ -9,6 +9,16 @@ import psycopg2
 import os
 from line_config import CHANNEL_SECRET, CHANNEL_ACCESS_TOKEN
 
+from supabase import create_client, Client
+
+# 環境変数から Supabase 接続情報を取得
+SUPABASE_URL = os.environ.get("SUPABASE_URL")
+SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
+
+# Supabase クライアントを作成
+supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+
+
 app = Flask(__name__)
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
@@ -242,5 +252,6 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 
 

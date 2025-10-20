@@ -4,17 +4,17 @@
 // カスタムマーカー生成関数
 // ==========================
 function getMarkerIcon(report) {
-  let iconUrl = "/static/images/marker-icon-gray.png"; // デフォルト
+  let iconUrl = "/static/画像/マーカーアイコン灰.png"; // デフォルト
 
   switch (report.health_status) {
     case "重傷":
-      iconUrl = "/static/images/marker-icon-red.png";
+      iconUrl = "/static/画像/マーカーアイコン赤.png";
       break;
     case "軽傷":
-      iconUrl = "/static/images/marker-icon-orange.png";
+      iconUrl = "/static/画像/マーカーアイコンオレンジ.png";
       break;
     case "無傷":
-      iconUrl = "/static/images/marker-icon-green.png";
+      iconUrl = "/static/画像/マーカーアイコン緑.png";
       break;
   }
 
@@ -26,72 +26,34 @@ function getMarkerIcon(report) {
   });
 }
 
-
- 
-  // === 被害種別 → アイコン（中央に小さく） ===
-  let symbol = "";
-  switch (report.damage || report.damage_type) {
-    case "火災": symbol = "🔥"; break;
-    case "倒壊": symbol = "🏚️"; break;
-    case "冠水": symbol = "💧"; break;
-    case "通行止め": symbol = "🚫"; break;
-    case "その他": symbol = "⚙️"; break;
-  }
-
-  // === HTML構成 ===
-  const html = `
-    <div style="
-      position: relative;
-      display: inline-block;
-      color: ${color};
-      font-size: 28px;
-      transform: translate(-50%, -50%);
-    ">
-      ${shape}
-      <span style="
-        position: absolute;
-        top: 4px; left: 6px;
-        font-size: 14px;
-      ">${symbol}</span>
-    </div>
-  `;
-
-  return L.divIcon({
-    className: "custom-marker",
-    html: html,
-    iconSize: [30, 30],
-  });
-}
-
 // ==========================
 // 地図初期化
 // ==========================
-const map = L.map('map').setView([35.6895, 139.6917], 13); // 初期位置: 東京
+const map = L.map('map').setView([35.6895, 139.6917], 13); // 東京中心
 
-// タイルレイヤ（地図背景）
+// 背景地図レイヤー
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   attribution: '&copy; OpenStreetMap contributors'
 }).addTo(map);
 
 // ==========================
-// Supabaseデータ取得 → GeoJSON表示
+// Supabaseデータ取得 → マーカー表示
 // ==========================
 fetch('/data')
   .then(response => response.json())
   .then(data => {
     L.geoJSON(data, {
-      // 🔹 各地点ごとのマーカーの外観を指定
+      // 各地点マーカー設定
       pointToLayer: function (feature, latlng) {
         const p = feature.properties;
-        const icon = getMarkerIcon(p); // カスタムマーカーを生成
+        const icon = getMarkerIcon(p);
         return L.marker(latlng, { icon: icon });
       },
 
-      // 🔹 ポップアップの内容設定
+      // ポップアップ設定
       onEachFeature: function (feature, layer) {
         const p = feature.properties;
 
-        // rescue_needed を日本語表記に
         let rescueText = "不明";
         if (p.rescue_needed === true || p.rescue_needed === "はい") rescueText = "はい";
         else if (p.rescue_needed === false || p.rescue_needed === "いいえ") rescueText = "いいえ";
@@ -111,6 +73,3 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
-
-
-

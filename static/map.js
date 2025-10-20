@@ -7,16 +7,10 @@ function getMarkerIcon(report) {
   let iconUrl = "/static/画像/マーカーアイコン灰.png"; // デフォルト
 
   switch (report.health_status) {
-    case "重傷":
-      iconUrl = "/static/画像/マーカーアイコン赤.png";
-      break;
-    case "軽傷":
-      iconUrl = "/static/画像/マーカーアイコンオレンジ.png";
-      break;
-    case "無傷":
-      iconUrl = "/static/画像/マーカーアイコン緑.png";
-      break;
-  }
+  case "重傷": iconUrl = "/static/images/marker-icon-red.png"; break;
+  case "軽傷": iconUrl = "/static/images/marker-icon-orange.png"; break;
+  case "無傷": iconUrl = "/static/images/marker-icon-green.png"; break;
+}
 
   return L.icon({
     iconUrl: iconUrl,
@@ -73,3 +67,4 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
+

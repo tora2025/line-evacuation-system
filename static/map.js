@@ -4,17 +4,30 @@
 // カスタムマーカー生成関数
 // ==========================
 function getMarkerIcon(report) {
-  // === 健康状態 → 色 ===
-  let color = "gray";
+  let iconUrl = "/static/images/marker-icon-gray.png"; // デフォルト
+
   switch (report.health_status) {
-    case "重傷": color = "red"; break;
-    case "軽傷": color = "orange"; break;
-    case "無傷": color = "green"; break;
+    case "重傷":
+      iconUrl = "/static/images/marker-icon-red.png";
+      break;
+    case "軽傷":
+      iconUrl = "/static/images/marker-icon-orange.png";
+      break;
+    case "無傷":
+      iconUrl = "/static/images/marker-icon-green.png";
+      break;
   }
 
-  // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "▲" : "●";
+  return L.icon({
+    iconUrl: iconUrl,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34]
+  });
+}
 
+
+ 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
   switch (report.damage || report.damage_type) {
@@ -98,5 +111,6 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
+
 
 

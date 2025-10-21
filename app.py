@@ -143,11 +143,19 @@ def handle_text(event):
             TextSendMessage(
                 text="被害状況を選んでください：",
                 quick_reply=QuickReply(items=[
-                    QuickReplyButton(action=MessageAction(label="倒壊", text="倒壊")),
-                    QuickReplyButton(action=MessageAction(label="冠水", text="冠水")),
-                    QuickReplyButton(action=MessageAction(label="通行止め", text="通行止め")),
-                    QuickReplyButton(action=MessageAction(label="火災", text="火災")),
-                    QuickReplyButton(action=MessageAction(label="その他", text="その他")),
+                     QuickReplyButton(action=MessageAction(label="火災 🔥", text="火災")),
+                     QuickReplyButton(action=MessageAction(label="倒壊 🏚️", text="倒壊")),
+                     QuickReplyButton(action=MessageAction(label="冠水 💧", text="冠水")),
+                     QuickReplyButton(action=MessageAction(label="通行止め 🚫", text="通行止め")),
+                     QuickReplyButton(action=MessageAction(label="強風 🌪️", text="強風")),
+                     QuickReplyButton(action=MessageAction(label="津波 🌊", text="津波")),
+                     QuickReplyButton(action=MessageAction(label="土砂崩れ ⛰️", text="土砂崩れ")),
+                     QuickReplyButton(action=MessageAction(label="停電 ⚡", text="停電")),
+                     QuickReplyButton(action=MessageAction(label="断水 🚰", text="断水")),
+                     QuickReplyButton(action=MessageAction(label="道路損壊 🧱", text="道路損壊")),
+                     QuickReplyButton(action=MessageAction(label="通信障害 📵", text="通信障害")),
+                     QuickReplyButton(action=MessageAction(label="台風被害 🌀", text="台風被害")),
+                     QuickReplyButton(action=MessageAction(label="その他 ⚙️", text="その他")),
                 ])
             )
         )
@@ -252,6 +260,7 @@ def get_data():
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
+
 
 
 

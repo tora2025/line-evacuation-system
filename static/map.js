@@ -7,13 +7,13 @@ function getMarkerIcon(report) {
   // === 健康状態 → 色 ===
   let color = "gray";
   switch (report.health_status) {
-    case "重症": color = "red"; break;
+    case "重傷": color = "red"; break;
     case "軽傷": color = "orange"; break;
     case "無傷": color = "green"; break;
   }
 
   // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "●";
+  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "🆘";
 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
@@ -98,5 +98,38 @@ fetch('/data')
     }).addTo(map);
   })
   .catch(err => console.error('データ読み込みエラー:', err));
+
+// ==========================
+// 凡例（レジェンド）を追加
+// ==========================
+const legend = L.control({ position: 'bottomright' }); // 右下に配置
+
+legend.onAdd = function (map) {
+  const div = L.DomUtil.create('div', 'info legend');
+  div.innerHTML = `
+    <div style="
+      background: white;
+      padding: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      font-size: 14px;
+      line-height: 1.6;
+    ">
+      <b>凡例（マーカーの意味）</b><br>
+      <span style="color:red;">●</span> 重傷<br>
+      <span style="color:orange;">●</span> 軽傷<br>
+      <span style="color:green;">●</span> 無傷<br>
+      <hr style="margin:5px 0;">
+      🔥 火災 &nbsp;&nbsp; 🏚️ 倒壊 &nbsp;&nbsp; 💧 冠水<br>
+      🚫 通行止め &nbsp;&nbsp; ⚙️ その他<br>
+      <hr style="margin:5px 0;">
+      ●（赤・橙・緑）：健康状態<br>
+      絵文字：被害種別
+    </div>
+  `;
+  return div;
+};
+
+legend.addTo(map);
 
 

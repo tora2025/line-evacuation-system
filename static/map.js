@@ -99,15 +99,12 @@ fetch('/data')
   })
   .catch(err => console.error('データ読み込みエラー:', err));
 // ==========================
-// 凡例（レジェンド）を追加（安全版・完全動作）
+// 凡例（レジェンド）を追加（完全動作版）
 // ==========================
 const legend = L.control({ position: 'bottomright' }); // 右下に配置
 
-legend.onAdd = function () {
-  // 凡例用のdivを作成
+legend.onAdd = function (map) { // ← 引数 map を追加
   const div = L.DomUtil.create('div', 'info legend');
-
-  // HTML内容（絵文字はUnicodeコードで安全に記述）
   div.innerHTML = `
     <div style="
       background: white;
@@ -122,21 +119,17 @@ legend.onAdd = function () {
       <span style="color:orange;">●</span> 軽傷<br>
       <span style="color:green;">●</span> 無傷<br>
       <hr style="margin:6px 0;">
-      &#128293; 火災 &nbsp;&nbsp;
-      &#127963; 倒壊 &nbsp;&nbsp;
-      &#128166; 冠水<br>
-      &#128683; 通行止め &nbsp;&nbsp;
-      &#9881;&#65039; その他<br>
+      🔥 火災 &nbsp;&nbsp;
+      🏚️ 倒壊 &nbsp;&nbsp;
+      💧 冠水<br>
+      🚫 通行止め &nbsp;&nbsp;
+      ⚙️ その他<br>
       <hr style="margin:6px 0;">
       ●（赤・橙・緑）：健康状態<br>
       絵文字：被害種別
     </div>
   `;
-
   return div;
 };
 
-// 地図に凡例を追加
 legend.addTo(map);
-
-

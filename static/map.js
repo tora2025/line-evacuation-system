@@ -22,6 +22,14 @@ function getMarkerIcon(report) {
     case "倒壊": symbol = "🏚️"; break;
     case "冠水": symbol = "💧"; break;
     case "通行止め": symbol = "🚫"; break;
+    case "強風": symbol = "🌪️"; break;
+    case "津波": symbol = "🌊"; break;
+    case "土砂崩れ": symbol = "⛰️"; break;
+    case "停電": symbol = "⚡"; break;
+    case "断水": symbol = "🚰"; break;
+    case "道路損壊": symbol = "🧱"; break;
+    case "通信障害": symbol = "📵"; break;
+    case "台風被害": symbol = "🌀"; break;
     case "その他": symbol = "⚙️"; break;
   }
 
@@ -142,6 +150,7 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
 
 
 

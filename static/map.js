@@ -13,7 +13,7 @@ function getMarkerIcon(report) {
   }
 
   // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "🆘";
+  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "●" : "●";
 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
@@ -102,7 +102,7 @@ fetch('/data')
 // ==========================
 // 凡例（レジェンド）を追加
 // ==========================
-const legend = L.control({ position: 'bottomright' }); // 右下に配置
+const legend = L.control({ position: 'topleft' }); // 左上に配置
 
 legend.onAdd = function (map) {
   const div = L.DomUtil.create('div', 'info legend');
@@ -131,5 +131,6 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
 
 

@@ -95,8 +95,10 @@ fetch('/data')
         `;
         layer.bindPopup(popupHtml);
       }
-
-      // ==========================
+    }).addTo(map);
+  })
+  .catch(err => console.error('データ読み込みエラー:', err));
+// ==========================
 // 凡例（レジェンド）を追加
 // ==========================
 const legend = L.control({ position: 'bottomright' }); // 右下に配置
@@ -129,7 +131,5 @@ legend.onAdd = function (map) {
 
 legend.addTo(map);
 
-    }).addTo(map);
-  })
-  .catch(err => console.error('データ読み込みエラー:', err));
+
 

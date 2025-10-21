@@ -116,14 +116,25 @@ legend.onAdd = function (map) {
       line-height: 1.6;
     ">
       <b>凡例（マーカーの意味）</b><br>
-      <span style="color:red;">●</span> 重傷<br>
-      <span style="color:orange;">●</span> 軽傷<br>
-      <span style="color:green;">●</span> 無傷<br>
+      <span style="color:red;">▼</span> 重傷<br>
+      <span style="color:orange;">▼</span> 軽傷<br>
+      <span style="color:green;">▼</span> 無傷<br>
       <hr style="margin:5px 0;">
-      🔥 火災 &nbsp;&nbsp; 🏚️ 倒壊 &nbsp;&nbsp; 💧 冠水<br>
-      🚫 通行止め &nbsp;&nbsp; ⚙️ その他<br>
+      🔥 火災 &nbsp;&nbsp;
+      🏚️ 倒壊 &nbsp;&nbsp;
+      💧 冠水<br>
+      🚫 通行止め &nbsp;&nbsp;
+      🌀 台風被害 &nbsp;&nbsp;
+      🌪️ 強風<br>
+      🌊 津波 &nbsp;&nbsp;
+      ⛰️ 土砂崩れ &nbsp;&nbsp;
+      ⚡ 停電<br>
+      🚰 断水 &nbsp;&nbsp;
+      🧱 道路損壊 &nbsp;&nbsp;
+      📵 通信障害 <br>
+      ⚙️ その他
       <hr style="margin:5px 0;">
-      ●（赤・橙・緑）：健康状態<br>
+      ▼（赤・橙・緑）：健康状態<br>
       絵文字：被害種別
     </div>
   `;
@@ -131,6 +142,7 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
 
 
 

@@ -151,6 +151,50 @@ legend.onAdd = function (map) {
 
 legend.addTo(map);
 
+// ==========================
+// 凡例の表示/非表示トグル処理
+// ==========================
+let legendVisible = true;
+
+document.addEventListener("click", function (event) {
+  if (event.target && event.target.id === "legendBtn") {
+    if (legendVisible) {
+      map.removeControl(legend);
+      event.target.innerText = "凡例を表示";
+    } else {
+      legend.addTo(map);
+      event.target.innerText = "凡例を隠す";
+    }
+    legendVisible = !legendVisible;
+  }
+});
+
+// ==========================
+// 凡例の ON/OFF ボタン
+// ==========================
+const legendToggle = L.control({ position: 'topright' });
+
+legendToggle.onAdd = function (map) {
+  const div = L.DomUtil.create('div', 'legend-toggle');
+  div.innerHTML = `
+    <button id="legendBtn" style="
+      background: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #888;
+      cursor: pointer;
+      font-size: 14px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    ">
+      凡例を隠す
+    </button>
+  `;
+  return div;
+};
+
+legendToggle.addTo(map);
+
+
 
 
 

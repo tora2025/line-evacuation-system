@@ -12,8 +12,6 @@ function getMarkerIcon(report) {
     case "無傷": color = "green"; break;
   }
 
-  // === 救助要否 → 形 ===
-  let shape = (report.rescue_needed === true || report.rescue_needed === "はい") ? "▼" : "▼";
 
   // === 被害種別 → アイコン（中央に小さく） ===
   let symbol = "";
@@ -34,28 +32,49 @@ function getMarkerIcon(report) {
   }
 
   // === HTML構成 ===
-  const html = `
+// === 地図ピン型アイコン（▼を廃止） ===
+const html = `
+  <div style="
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: ${color};
+    border-radius: 50%;
+    border: 3px solid white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  ">
+    <!-- 中央：被害種別（変更なし） -->
+    <span style="
+      position: absolute;
+      top: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 14px;
+    ">${symbol}</span>
+
+    <!-- ピン先端 -->
     <div style="
-      position: relative;
-      display: inline-block;
-      color: ${color};
-      font-size: 28px;
-      transform: translate(-50%, -50%);
-    ">
-      ${shape}
-      <span style="
-        position: absolute;
-        top: 4px; left: 6px;
-        font-size: 14px;
-      ">${symbol}</span>
-    </div>
-  `;
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 6px solid transparent;
+      border-right: 6px solid transparent;
+      border-top: 8px solid ${color};
+    "></div>
+  </div>
+`;
 
   return L.divIcon({
-    className: "custom-marker",
+    className: "",
     html: html,
-    iconSize: [30, 30],
+    iconSize: [30, 38],
+    iconAnchor: [15, 38],
+    popupAnchor: [0, -35]
   });
+
 }
 
 // ==========================
@@ -193,6 +212,7 @@ legendToggle.onAdd = function (map) {
 };
 
 legendToggle.addTo(map);
+
 
 
 
